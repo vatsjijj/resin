@@ -1,8 +1,8 @@
 def outer() {
-  let x = "out";
+  let x = "out"
   def inner() {
-    print(x);
+    println(x)
   }
-  inner();
+  inner()
 }
-outer();
+outer()

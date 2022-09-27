@@ -1,0 +1,4 @@
+println("Enter your age:")
+let age = readNum()
+let oldEnough = age >= 18
+println("Old enough to vote? " + oldEnough)

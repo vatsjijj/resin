@@ -1,40 +1,40 @@
 class Zoo {
   def init() {
-    this.aardvark = 1;
-    this.baboon   = 1;
-    this.cat      = 1;
-    this.donkey   = 1;
-    this.elephant = 1;
-    this.fox      = 1;
+    this.aardvark = 1
+    this.baboon   = 1
+    this.cat      = 1
+    this.donkey   = 1
+    this.elephant = 1
+    this.fox      = 1
   }
 
   def ant() {
-    return this.aardvark;
+    return this.aardvark
   }
 
   def banana() {
-    return this.baboon;
+    return this.baboon
   }
 
   def tuna() {
-    return this.cat;
+    return this.cat
   }
 
   def hay() {
-    return this.donkey;
+    return this.donkey
   }
 
   def grass() {
-    return this.elephant;
+    return this.elephant
   }
 
   def mouse() {
-    return this.fox;
+    return this.fox
   }
 }
 
-let zoo = Zoo();
-let sum = 0;
+let zoo = Zoo()
+let sum = 0
 
 while (sum < 100000000) {
   sum = sum + zoo.ant()
@@ -42,7 +42,7 @@ while (sum < 100000000) {
             + zoo.tuna()
             + zoo.hay()
             + zoo.grass()
-            + zoo.mouse();
+            + zoo.mouse()
 }
 
-print(sum);
+println(sum)

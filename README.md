@@ -1,108 +1,115 @@
 # Resin
 Resin is a simple programming language running on a bytecode VM. It is single pass and faster than Python!
 
+The latest version is 09-27-2022, which changes the syntax and improves the runtime. This update *will* break things!
+
 # Examples
-```java
-print("Hello, world!");
+```scala
+println("Hello, world!")
 ```
-```java
+```scala
 def fib(n) {
   if (n < 2) {
-    return n;
+    return n
   }
-  return fib(n - 2) + fib(n - 1);
+  return fib(n - 2) + fib(n - 1)
 }
 
-print(fib(35));
+println(fib(35))
 ```
-```java
+```scala
 class Math {
   // Not the best power function and
   // it breaks when you use a decimal.
   // Use the power operator ('^') instead.
   def pow(num, base) {
     if (base == 0) {
-      return 1;
+      return 1
     }
-    return num * this.pow(num, base - 1);
+    return num * this.pow(num, base - 1)
   }
   
   def log(base, num) {
     if (num <= base) {
-      return 1;
+      return 1
     }
-    return this.log(base, num / base) + 1;
+    return this.log(base, num / base) + 1
   }
 }
 
 class Greet {
   def sayHello(name) {
-    print("Hello, " + name + "!");
+    println("Hello, " + name + "!")
   }
 
   def sayHola(name) {
-    print("Hola, " + name + "!");
+    println("Hola, " + name + "!")
   }
 }
 
 class Point {
   def init(coordinateX, coordinateY) {
-    this.x = coordinateX;
-    this.y = coordinateY;
+    this.x = coordinateX
+    this.y = coordinateY
   }
 }
 
-print(Math().pow(9, 5));
-print(Math().log(10, 1000));
-Greet().sayHello("John Doe");
-Greet().sayHola("John Doe");
+println(Math().pow(9, 5))
+println(Math().log(10, 1000))
+Greet().sayHello("John Doe")
+Greet().sayHola("John Doe")
 
-let testPoint = Point(7, 5);
-print(testPoint.x);
-print(testPoint.y);
+let testPoint = Point(7, 5)
+println(testPoint.x)
+println(testPoint.y)
 ```
-```java
+```scala
+// Stolen from Robert Nystrom
+
 class A {
   def method() {
-    print("A method");
+    println("A method")
   }
 }
 
 class B extends A {
   def method() {
-    print("B method");
+    println("B method")
   }
 
   def test() {
-    super.method();
+    super.method()
   }
 }
 
 class C extends B {}
 
-C().test();
+C().test()
 ```
-```java
+```scala
 let testList = [
   "one", "two",
   "three", "four",
   "five", "six",
   "seven", "eight",
   "nine", "ten"
-];
+]
+
+print("List contents: ")
+println(testList)
 
 for (let i = 0; i < 10; i = i + 1) {
-  print(testList[i]);
+  println(testList[i])
 }
 ```
-```java
-let x = 3;
+```scala
+let x = 3
 
 match (x) {
-  with 0 -> print("zero");
-  with 1 -> print("one");
-  with 2 -> print("two");
-  _ -> print("other");
+  with 0 -> println("zero")
+  with 1 -> println("one")
+  with 2 -> println("two")
+  _ -> println("other")
 }
 ```
 

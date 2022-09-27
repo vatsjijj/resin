@@ -1,9 +1,9 @@
 for (let i = 0; i < 10; i = i + 1) {
-  print(i);
+  println(i)
   if (i % 2 == 0) {
-    print("even!");
+    println("even!")
   }
   else {
-    print("odd!");
+    println("odd!")
   }
 }

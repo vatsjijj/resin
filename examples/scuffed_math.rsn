@@ -1,25 +1,25 @@
 def pow(num, base) {
   if (base == 0) {
-    return 1;
+    return 1
   }
-  return num * pow(num, base - 1);
+  return num * pow(num, base - 1)
 }
 
 def log(base, num) {
   if (num <= base) {
-    return 1;
+    return 1
   }
   else {
-    return log(base, num / base) + 1;
+    return log(base, num / base) + 1
   }
 }
 
 class Math {}
 
-let math = Math();
+let math = Math()
 
-math.pow = pow;
-math.log = log;
+math.pow = pow
+math.log = log
 
-print(math.pow(7, 3));
-print(math.log(10, 1000));
+println(math.pow(7, 3))
+println(math.log(10, 1000))

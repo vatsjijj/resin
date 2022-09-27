@@ -1,24 +1,24 @@
 class Rectangle {
   def init(rectWidth, rectHeight) {
-    this.width = rectWidth;
-    this.height = rectHeight;
+    this.width = rectWidth
+    this.height = rectHeight
   }
 
   def printArea() {
-    let area = this.width * this.height;
-    print(area);
+    let area = this.width * this.height
+    println(area)
   }
 
   def setHeight(newHeight) {
-    this.height = newHeight;
+    this.height = newHeight
   }
 
   def setWidth(newWidth) {
-    this.width = newWidth;
+    this.width = newWidth
   }
 }
 
-let box = Rectangle(10, 5);
-box.printArea();
-box.setHeight(3);
-box.printArea();
+let box = Rectangle(10, 5)
+box.printArea()
+box.setHeight(3)
+box.printArea()

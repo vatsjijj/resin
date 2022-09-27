@@ -40,7 +40,6 @@ typedef enum {
   NIL,
   DEF,
   SUPER,
-  PRINT,
   RETURN,
   THIS,
   LET,

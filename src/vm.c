@@ -12,73 +12,119 @@
 
 VM vm;
 
-// Natives
+// Native helpers
 
-// Currently broken, needs fix.
-/*
-static Value typeNative(int argCount, Value* args) {
-  if (argCount == 0) {
-    return NIL_VAL;
-  }
-  switch (args->type) {
-    case VAL_NIL: {
-      ObjStr* result = copyStr("nil", 3);
-      return OBJ_VAL(result);
-    }
-    case VAL_BOOL: {
-      ObjStr* result = copyStr("bool", 4);
-      return OBJ_VAL(result);
-    }
-    case VAL_NUM: {
-      ObjStr* result = copyStr("num", 3);
-      return OBJ_VAL(result);
-    }
-    case VAL_OBJ: {
-      switch (args->as.obj->type) {
-        case OBJ_BOUND_METHOD: {
-          ObjStr* result = copyStr("bound method", 12);
-          return OBJ_VAL(result);
-        }
-        case OBJ_CLASS: {
-          ObjStr* result = copyStr("class", 5);
-          return OBJ_VAL(result);
-        }
-        case OBJ_FUNC: {
-          ObjStr* result = copyStr("func", 4);
-          return OBJ_VAL(result);
-        }
-        case OBJ_INSTANCE: {
-          ObjStr* result = copyStr("instance", 8);
-          return OBJ_VAL(result);
-        }
-        case OBJ_CLOSURE: {
-          // They're basically the same thing, so
-          // return the same thing.
-          ObjStr* result = copyStr("func", 4);
-          return OBJ_VAL(result);
-        }
-        case OBJ_NATIVE: {
-          ObjStr* result = copyStr("native", 6);
-          return OBJ_VAL(result);
-        }
-        case OBJ_STR: {
-          ObjStr* result = copyStr("str", 3);
-          return OBJ_VAL(result);
-        }
-        case OBJ_UPVAL: {
-          // This may never do anything, but
-          // I'll expose it to the end user
-          // because why not.
-          ObjStr* result = copyStr("upval", 5);
-          return OBJ_VAL(result);
-        }
-        default: return NIL_VAL; // Unreachable, but just in case.
+static void printList(ObjList* list) {
+  printf("[");
+  for (int i = 0; i < list->count; i++) {
+    if (i == list->count - 1) {
+      if (IS_STR(list->items[i])) {
+        printf("\"");
+        printValue(list->items[i]);
+        printf("\"");
+      }
+      else if (IS_LIST(list->items[i])) {
+        printList(AS_LIST(list->items[i]));
+      }
+      else {
+        printValue(list->items[i]);
       }
     }
-    default: return NIL_VAL; // Just in case.
+    else {
+      if (IS_STR(list->items[i])) {
+        printf("\"");
+        printValue(list->items[i]);
+        printf("\", ");
+      }
+      else if (IS_LIST(list->items[i])) {
+        printList(AS_LIST(list->items[i]));
+        printf(", ");
+      }
+      else {
+        printValue(list->items[i]);
+        printf(", ");
+      }
+    }
   }
+  printf("]");
 }
-*/
+
+// End native helpers
+
+// Natives
+
+static Value printNative(int argCount, Value* args) {
+  if (argCount <= 0) {
+    // Add later.
+    return NIL_VAL;
+  }
+  if (IS_BOOL(args[0])) {
+    printf("%s", AS_BOOL(args[0]) ? "true" : "false");
+  }
+  else if (IS_NUM(args[0])) {
+    printf("%.16g", AS_NUM(args[0]));
+  }
+  else if (IS_NIL(args[0])) {
+    printf("nil");
+  }
+  else if (IS_OBJ(args[0])) {
+    switch (OBJ_TYPE(args[0])) {
+      case OBJ_STR: printf("%s", AS_STR(args[0])->chars); break;
+      case OBJ_LIST: {
+        printList(AS_LIST(args[0]));
+        break;
+      }
+      default: return NIL_VAL;
+    }
+  }
+  return NIL_VAL;
+}
+
+static Value printlnNative(int argCount, Value* args) {
+  if (argCount <= 0) {
+    // Add later.
+    return NIL_VAL;
+  }
+  if (IS_BOOL(args[0])) {
+    printf("%s\n", AS_BOOL(args[0]) ? "true" : "false");
+  }
+  else if (IS_NUM(args[0])) {
+    printf("%.16g\n", AS_NUM(args[0]));
+  }
+  else if (IS_NIL(args[0])) {
+    printf("nil\n");
+  }
+  else if (IS_OBJ(args[0])) {
+    switch (OBJ_TYPE(args[0])) {
+      case OBJ_STR: printf("%s\n", AS_STR(args[0])->chars); break;
+      case OBJ_LIST: {
+        printList(AS_LIST(args[0]));
+        printf("\n");
+        break;
+      }
+      default: return NIL_VAL;
+    }
+  }
+  return NIL_VAL;
+}
+
+static Value readStrNative(int argCount, Value* args) {
+  if (argCount > 0) {
+    // Do later.
+  }
+  char input[255]; // Big, yes.
+  scanf("%s", input);
+  return OBJ_VAL(copyStr(input, strlen(input)));
+}
+
+static Value readNumNative(int argCount, Value* args) {
+  if (argCount > 0) {
+    // Do later.
+  }
+  double input;
+  scanf("%lf", &input);
+  return NUM_VAL(input);
+}
 
 static Value appendNative(int argCount, Value* args) {
   if (argCount != 2 || !IS_LIST(args[0])) {
@@ -122,7 +168,7 @@ static void runtimeErr(const char* format, ...) {
     ObjFunc* func = frame->closure->func;
     size_t instruction = frame->ip - func->chunk.code - 1;
     fprintf(
-      stderr, "[Line %d] in ",
+      stderr, "\n[Line %d] in ",
       getLine(&func->chunk, instruction)
     );
     if (func->name == NULL) {
@@ -158,6 +204,10 @@ void initVM() {
   // defNative("type", typeNative);
   defNative("append", appendNative);
   defNative("del", delNative);
+  defNative("print", printNative);
+  defNative("println", printlnNative);
+  defNative("readStr", readStrNative);
+  defNative("readNum", readNumNative);
 }
 
 void freeVM() {
@@ -341,9 +391,35 @@ static bool falsey(Value value) {
   return IS_NIL(value) || (IS_BOOL(value) && !AS_BOOL(value));
 }
 
+static ObjStr* toStr(Value value) {
+  ObjStr* str;
+  if (IS_BOOL(value)) {
+    str =
+      AS_BOOL(value) ? copyStr("true", 4) : copyStr("false", 5);
+  }
+  else if (IS_NUM(value)) {
+    char nstr[24];
+    double num = AS_NUM(value);
+    sprintf(nstr, "%.16g", num);
+    str =
+      copyStr(nstr, strlen(nstr));
+  }
+  else if (IS_NIL(value)) {
+    str = copyStr("nil", 3);
+  }
+  else if (IS_STR(value)) {
+    str = AS_STR(value);
+  }
+  else {
+    runtimeErr("Invalid concatenation type.");
+    str = copyStr("nil", 3);
+  }
+  return str;
+}
+
 static void concat() {
-  ObjStr* b = AS_STR(peek(0));
-  ObjStr* a = AS_STR(peek(1));
+  ObjStr* b = toStr(peek(0));
+  ObjStr* a = toStr(peek(1));
   int length = a->length + b->length;
   char* chars = ALLOCATE(char, length + 1);
   memcpy(chars, a->chars, a->length);
@@ -583,7 +659,7 @@ static InterpretResult run() {
         break;
       }
       case OP_ADD: {
-        if (IS_STR(peek(0)) && IS_STR(peek(1))) {
+        if (IS_STR(peek(0)) || IS_STR(peek(1))) {
           concat();
         }
         else if (IS_NUM(peek(0)) && IS_NUM(peek(1))) {
@@ -593,7 +669,7 @@ static InterpretResult run() {
         }
         else {
           runtimeErr(
-            "Operands must either be numbers or strings."
+            "Invalid types for operator."
           );
           return INTERPRET_RUNTIME_ERROR;
         }
@@ -651,11 +727,6 @@ static InterpretResult run() {
         }
         push(NUM_VAL(-AS_NUM(pop())));
         break;
-      case OP_PRINT: {
-        printValue(pop());
-        printf("\n");
-        break;
-      }
       case OP_JMP: {
         uint16_t offset = READ_SHORT();
         frame->ip += offset;

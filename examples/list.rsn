@@ -4,8 +4,11 @@ let testList = [
   "five", "six",
   "seven", "eight",
   "nine", "ten"
-];
+]
+
+print("List contents: ")
+println(testList)
 
 for (let i = 0; i < 10; i = i + 1) {
-  print(testList[i]);
+  println(testList[i])
 }

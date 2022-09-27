@@ -2,20 +2,20 @@
 
 class A {
   def method() {
-    print("A method");
+    println("A method")
   }
 }
 
 class B extends A {
   def method() {
-    print("B method");
+    println("B method")
   }
 
   def test() {
-    super.method();
+    super.method()
   }
 }
 
 class C extends B {}
 
-C().test();
+C().test()

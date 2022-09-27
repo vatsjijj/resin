@@ -24,7 +24,6 @@ typedef enum {
   OP_NOT,
   OP_NOT_EQU,
   OP_NEGATE,
-  OP_PRINT,
   OP_JMP,
   OP_JMPF,
   OP_LOOP,

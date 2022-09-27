@@ -1,12 +1,12 @@
-let x = 10;
+let x = 10
 if (x > 5) {
-  let x = 4;
-  print(x);
+  let x = 4
+  println(x)
 }
-print(x);
+println(x)
 
-let y = 0;
+let y = 0
 while (y < 10) {
-  print(y);
-  y = y + 1;
+  println(y)
+  y = y + 1
 }

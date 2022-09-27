@@ -133,7 +133,6 @@ static TokenType identifierType() {
       }
     case 'i': return checkKeyword(1, 1, "f", IF);
     case 'n': return checkKeyword(1, 2, "il", NIL);
-    case 'p': return checkKeyword(1, 4, "rint", PRINT);
     case 'r': return checkKeyword(1, 5, "eturn", RETURN);
     case 's': return checkKeyword(1, 4, "uper", SUPER);
     case 'l': return checkKeyword(1, 2, "et", LET);

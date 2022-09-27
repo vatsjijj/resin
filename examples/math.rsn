@@ -1,18 +1,18 @@
 def pow(num, base) {
   if (base == 0) {
-    return 1;
+    return 1
   }
-  return num * pow(num, base - 1);
+  return num * pow(num, base - 1)
 }
 
 def log(base, num) {
   if (num <= base) {
-    return 1;
+    return 1
   }
   else {
-    return log(base, num / base) + 1;
+    return log(base, num / base) + 1
   }
 }
 
-print(pow(9, 8));
-print(log(10, 1000));
+println(pow(9, 8))
+println(log(10, 1000))

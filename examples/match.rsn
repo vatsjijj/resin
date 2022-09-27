@@ -1,8 +1,8 @@
-let x = 3;
+let x = 3
 
 match (x) {
-  with 0 -> print("zero");
-  with 1 -> print("one");
-  with 2 -> print("two");
-  _ -> print("other");
+  with 0 -> println("zero")
+  with 1 -> println("one")
+  with 2 -> println("two")
+  _ -> println("other")
 }

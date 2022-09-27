@@ -611,7 +611,6 @@ ParseRule rules[] = {
   [IF]            = {NULL,     NULL,   PREC_NONE},
   [NIL]           = {literal,  NULL,   PREC_NONE},
   [OR]            = {NULL,     or_,    PREC_OR},
-  [PRINT]         = {NULL,     NULL,   PREC_NONE},
   [RETURN]        = {NULL,     NULL,   PREC_NONE},
   [SUPER]         = {super,    NULL,   PREC_NONE},
   [THIS]          = {this,     NULL,   PREC_NONE},
@@ -705,7 +704,7 @@ static void expression() {
 
 static void expressionStatement() {
   expression();
-  consume(SEMICOLON, "Expected ';' after expression.");
+  // consume(SEMICOLON, "Expected ';' after expression.");
   emitByte(OP_POP);
 }
 
@@ -717,7 +716,7 @@ static void varDeclaration() {
   else {
     emitByte(OP_NIL);
   }
-  consume(SEMICOLON, "Expected ';' after variable declaration.");
+  // consume(SEMICOLON, "Expected ';' after variable declaration.");
   defVar(global);
 }
 
@@ -747,7 +746,7 @@ static void classDeclaration() {
   }
   namedVar(className, false);
   consume(LEFT_BRACE, "Expected '{' before class body.");
-  while (!check(RIGHT_BRACE) && !check(EOF)) {
+  while (!check(RIGHT_BRACE) && !check(TEOF)) {
     if (match(DEF)) {
       method();
     }
@@ -803,6 +802,10 @@ static void forStatement() {
   }
   else if (match(LET)) {
     varDeclaration();
+    consume(
+      SEMICOLON,
+      "Expected ';' after variable declaration in for loop."
+    );
   }
   else {
     expressionStatement();
@@ -862,14 +865,6 @@ static void ifStatement() {
   patchJmp(elseJmp);
 }
 
-static void printStatement() {
-  consume(LEFT_PAREN, "Expected '(' after builtin print.");
-  expression();
-  consume(RIGHT_PAREN, "Expected ')' after expression.");
-  consume(SEMICOLON, "Expected ';' after ')'.");
-  emitByte(OP_PRINT);
-}
-
 static void returnStatement() {
   if (current->type == TYPE_SCRIPT) {
     err("Cannot return from top-level.");
@@ -882,7 +877,7 @@ static void returnStatement() {
       err("Cannot return a value from an initializer.");
     }
     expression();
-    consume(SEMICOLON, "Expected ';' after return value.");
+    // consume(SEMICOLON, "Expected ';' after return value.");
     emitByte(OP_RETURN);
   }
 }
@@ -912,7 +907,7 @@ static void matchStatement() {
   int caseEnds[MAX_CASES];
   int caseCount = 0;
   int previousCaseSkip = -1;
-  while (!match(RIGHT_BRACE) && !check(EOF)) {
+  while (!match(RIGHT_BRACE) && !check(TEOF)) {
     if (match(WITH) || match(UNDERSCORE)) {
       TokenType caseType = parser.previous.type;
       if (state == 2) {
@@ -974,7 +969,6 @@ static void sync() {
       case FOR:
       case IF:
       case WHILE:
-      case PRINT:
       case RETURN:
         return;
       default: // Nothing
@@ -1002,10 +996,7 @@ static void declaration() {
 }
 
 static void statement() {
-  if (match(PRINT)) {
-    printStatement();
-  }
-  else if (match(IF)) {
+  if (match(IF)) {
     ifStatement();
   }
   else if (match(RETURN)) {
