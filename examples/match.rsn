@@ -1,0 +1,8 @@
+let x = 3;
+
+match (x) {
+  with 0 -> print("zero");
+  with 1 -> print("one");
+  with 2 -> print("two");
+  _ -> print("other");
+}

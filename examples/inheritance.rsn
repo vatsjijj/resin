@@ -1,0 +1,21 @@
+// Stolen from Robert Nystrom
+
+class A {
+  def method() {
+    print("A method");
+  }
+}
+
+class B extends A {
+  def method() {
+    print("B method");
+  }
+
+  def test() {
+    super.method();
+  }
+}
+
+class C extends B {}
+
+C().test();

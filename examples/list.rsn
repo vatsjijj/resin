@@ -1,0 +1,11 @@
+let testList = [
+  "one", "two",
+  "three", "four",
+  "five", "six",
+  "seven", "eight",
+  "nine", "ten"
+];
+
+for (let i = 0; i < 10; i = i + 1) {
+  print(testList[i]);
+}

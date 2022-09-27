@@ -1,0 +1,8 @@
+def outer() {
+  let x = "out";
+  def inner() {
+    print(x);
+  }
+  inner();
+}
+outer();

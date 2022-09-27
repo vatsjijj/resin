@@ -1,0 +1,12 @@
+let x = 10;
+if (x > 5) {
+  let x = 4;
+  print(x);
+}
+print(x);
+
+let y = 0;
+while (y < 10) {
+  print(y);
+  y = y + 1;
+}
