@@ -393,9 +393,8 @@ static bool falsey(Value value) {
 
 static ObjStr* toStr(Value value) {
   ObjStr* str;
-  if (IS_BOOL(value)) {
-    str =
-      AS_BOOL(value) ? copyStr("true", 4) : copyStr("false", 5);
+  if (IS_STR(value)) {
+    str = AS_STR(value);
   }
   else if (IS_NUM(value)) {
     char nstr[24];
@@ -404,11 +403,12 @@ static ObjStr* toStr(Value value) {
     str =
       copyStr(nstr, strlen(nstr));
   }
+  else if (IS_BOOL(value)) {
+    str =
+      AS_BOOL(value) ? copyStr("true", 4) : copyStr("false", 5);
+  }
   else if (IS_NIL(value)) {
     str = copyStr("nil", 3);
-  }
-  else if (IS_STR(value)) {
-    str = AS_STR(value);
   }
   else {
     runtimeErr("Invalid concatenation type.");
@@ -763,20 +763,24 @@ static InterpretResult run() {
       case OP_INVOKE: {
         ObjStr* method = READ_STR();
         int argCount = READ_BYTE();
+        frame->ip = ip;
         if (!invoke(method, argCount)) {
           return INTERPRET_RUNTIME_ERROR;
         }
         frame = &vm.frames[vm.frameCount - 1];
+        ip = frame->ip;
         break;
       }
       case OP_INVOKE_SUPER: {
         ObjStr* method = READ_STR();
         int argCount = READ_BYTE();
+        frame->ip = ip;
         ObjClass* superclass = AS_CLASS(pop());
         if (!invokeFromClass(superclass, method, argCount)) {
           return INTERPRET_RUNTIME_ERROR;
         }
         frame = &vm.frames[vm.frameCount - 1];
+        ip = frame->ip;
         break;
       }
       case OP_CLOSURE: {

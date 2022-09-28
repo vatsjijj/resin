@@ -3,7 +3,7 @@ CC = gcc
 UNAME_S = uname -s
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
-FLAGS = -std=c17 -Wall -fPIC -Ofast -lm
+FLAGS = -std=c17 -Wall -Ofast -lm
 
 ifeq ($(OS), Windows_NT)
 	RM_COM = del

@@ -704,7 +704,6 @@ static void expression() {
 
 static void expressionStatement() {
   expression();
-  // consume(SEMICOLON, "Expected ';' after expression.");
   emitByte(OP_POP);
 }
 
@@ -716,7 +715,6 @@ static void varDeclaration() {
   else {
     emitByte(OP_NIL);
   }
-  // consume(SEMICOLON, "Expected ';' after variable declaration.");
   defVar(global);
 }
 
@@ -869,6 +867,7 @@ static void returnStatement() {
   if (current->type == TYPE_SCRIPT) {
     err("Cannot return from top-level.");
   }
+  // This is the only time you'll use a semicolon.
   if (match(SEMICOLON)) {
     emitReturn();
   }
@@ -877,7 +876,6 @@ static void returnStatement() {
       err("Cannot return a value from an initializer.");
     }
     expression();
-    // consume(SEMICOLON, "Expected ';' after return value.");
     emitByte(OP_RETURN);
   }
 }
