@@ -433,16 +433,18 @@ static void concat() {
 
 static InterpretResult run() {
   CallFrame* frame = &vm.frames[vm.frameCount - 1];
-  #define READ_BYTE() (*frame->ip++)
+  register uint8_t* ip = frame->ip;
+  #define READ_BYTE() (*ip++)
   #define READ_CONST() \
     (frame->closure->func->chunk.constants.values[READ_BYTE()])
   #define READ_SHORT() \
-    (frame->ip += 2, \
-    (uint16_t)((frame->ip[-2] << 8) | frame->ip[-1]))
+    (ip += 2, \
+    (uint16_t)((ip[-2] << 8) | ip[-1]))
   #define READ_STR() AS_STR(READ_CONST())
   #define BINARY_OP(valType, op) \
     do { \
       if (!IS_NUM(peek(0)) || !IS_NUM(peek(1))) { \
+        frame->ip = ip; \
         runtimeErr("Operands must be numbers."); \
         return INTERPRET_RUNTIME_ERROR; \
       } \
@@ -491,7 +493,8 @@ static InterpretResult run() {
         ObjStr* name = READ_STR();
         Value value;
         if (!tableGet(&vm.globals, name, &value)) {
-          runtimeErr("'%s' is undefined.", name->chars);
+          frame->ip = ip;
+          runtimeErr("Variable '%s' is undefined.", name->chars);
           return INTERPRET_RUNTIME_ERROR;
         }
         push(value);
@@ -507,6 +510,7 @@ static InterpretResult run() {
         ObjStr* name = READ_STR();
         if (tableSet(&vm.globals, name, peek(0))) {
           tableDel(&vm.globals, name);
+          frame->ip = ip;
           runtimeErr("'%s' is undefined.", name->chars);
           return INTERPRET_RUNTIME_ERROR;
         }
@@ -668,6 +672,7 @@ static InterpretResult run() {
           push(NUM_VAL(a + b));
         }
         else {
+          frame->ip = ip;
           runtimeErr(
             "Invalid types for operator."
           );
@@ -722,6 +727,7 @@ static InterpretResult run() {
         break;
       case OP_NEGATE:
         if (!IS_NUM(peek(0))) {
+          frame->ip = ip;
           runtimeErr("Operand must be a number.");
           return INTERPRET_RUNTIME_ERROR;
         }
@@ -729,27 +735,29 @@ static InterpretResult run() {
         break;
       case OP_JMP: {
         uint16_t offset = READ_SHORT();
-        frame->ip += offset;
+        ip += offset;
         break;
       }
       case OP_JMPF: {
         uint16_t offset = READ_SHORT();
         if (falsey(peek(0))) {
-          frame->ip += offset;
+          ip += offset;
         }
         break;
       }
       case OP_LOOP: {
         uint16_t offset = READ_SHORT();
-        frame->ip -= offset;
+        ip -= offset;
         break;
       }
       case OP_CALL: {
         int argCount = READ_BYTE();
+        frame->ip = ip;
         if (!callVal(peek(argCount), argCount)) {
           return INTERPRET_RUNTIME_ERROR;
         }
         frame = &vm.frames[vm.frameCount - 1];
+        ip = frame->ip;
         break;
       }
       case OP_INVOKE: {
@@ -803,6 +811,7 @@ static InterpretResult run() {
         vm.stackTop = frame->slots;
         push(result);
         frame = &vm.frames[vm.frameCount - 1];
+        ip = frame->ip;
         break;
       }
       case OP_CLASS:

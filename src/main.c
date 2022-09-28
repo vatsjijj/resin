@@ -7,7 +7,7 @@
 #include "include/vm.h"
 #include "include/debug.h"
 
-#define RESIN_VERSION "09-27-2022"
+#define RESIN_VERSION "09-28-2022"
 
 static void repl() {
   printf("Resin, Version %s.\n\n", RESIN_VERSION);

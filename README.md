@@ -1,7 +1,7 @@
 # Resin
 Resin is a simple programming language running on a bytecode VM. It is single pass and faster than Python!
 
-The latest version is 09-27-2022, which changes the syntax and improves the runtime. This update *will* break things!
+The latest version is 09-28-2022.
 
 # Examples
 ```scala
