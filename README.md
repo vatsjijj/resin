@@ -3,6 +3,8 @@ Resin is a simple programming language running on a bytecode VM. It is single pa
 
 The latest version is 09-28-2022.
 
+**Note:** Resin is currently being rewritten in D because I cannot be bothered to continue using C.
+
 # Examples
 ```scala
 println("Hello, world!")
