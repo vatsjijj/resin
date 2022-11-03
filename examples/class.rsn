@@ -2,14 +2,14 @@ class Math {
   // Not the best power function and
   // it breaks when you use a decimal.
   // Use the power operator ('^') instead.
-  def pow(num, base) {
+  func pow(num, base) {
     if (base == 0) {
       return 1
     }
     return num * this.pow(num, base - 1)
   }
   
-  def log(base, num) {
+  func log(base, num) {
     if (num <= base) {
       return 1
     }
@@ -18,17 +18,17 @@ class Math {
 }
 
 class Greet {
-  def sayHello(name) {
+  func sayHello(name) {
     println("Hello, " + name + "!")
   }
 
-  def sayHola(name) {
+  func sayHola(name) {
     println("Hola, " + name + "!")
   }
 }
 
 class Point {
-  def init(coordinateX, coordinateY) {
+  func init(coordinateX, coordinateY) {
     this.x = coordinateX
     this.y = coordinateY
   }

@@ -607,7 +607,7 @@ ParseRule rules[] = {
   [ELSE]          = {NULL,     NULL,   PREC_NONE},
   [TFALSE]        = {literal,  NULL,   PREC_NONE},
   [FOR]           = {NULL,     NULL,   PREC_NONE},
-  [DEF]           = {NULL,     NULL,   PREC_NONE},
+  [FUNC]          = {NULL,     NULL,   PREC_NONE},
   [IF]            = {NULL,     NULL,   PREC_NONE},
   [NIL]           = {literal,  NULL,   PREC_NONE},
   [OR]            = {NULL,     or_,    PREC_OR},
@@ -745,7 +745,7 @@ static void classDeclaration() {
   namedVar(className, false);
   consume(LEFT_BRACE, "Expected '{' before class body.");
   while (!check(RIGHT_BRACE) && !check(TEOF)) {
-    if (match(DEF)) {
+    if (match(FUNC)) {
       method();
     }
     else {
@@ -962,7 +962,7 @@ static void sync() {
     }
     switch (parser.current.type) {
       case CLASS:
-      case DEF:
+      case FUNC:
       case LET:
       case FOR:
       case IF:
@@ -976,7 +976,7 @@ static void sync() {
 }
 
 static void declaration() {
-  if (match(DEF)) {
+  if (match(FUNC)) {
     funcDeclaration();
   }
   else if (match(CLASS)) {

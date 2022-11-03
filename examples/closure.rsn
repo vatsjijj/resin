@@ -1,6 +1,6 @@
-def outer() {
+func outer() {
   let x = "out"
-  def inner() {
+  func inner() {
     println(x)
   }
   inner()

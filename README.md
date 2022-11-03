@@ -1,16 +1,14 @@
 # Resin
 Resin is a simple programming language running on a bytecode VM. It is single pass and faster than Python!
 
-The latest version is 09-28-2022.
-
-**Note:** Resin is currently being rewritten in D because I cannot be bothered to continue using C.
+The latest version is 11-03-2022.
 
 # Examples
 ```scala
 println("Hello, world!")
 ```
 ```scala
-def fib(n) {
+func fib(n) {
   if (n < 2) {
     return n
   }
@@ -24,14 +22,14 @@ class Math {
   // Not the best power function and
   // it breaks when you use a decimal.
   // Use the power operator ('^') instead.
-  def pow(num, base) {
+  func pow(num, base) {
     if (base == 0) {
       return 1
     }
     return num * this.pow(num, base - 1)
   }
   
-  def log(base, num) {
+  func log(base, num) {
     if (num <= base) {
       return 1
     }
@@ -40,17 +38,17 @@ class Math {
 }
 
 class Greet {
-  def sayHello(name) {
+  func sayHello(name) {
     println("Hello, " + name + "!")
   }
 
-  def sayHola(name) {
+  func sayHola(name) {
     println("Hola, " + name + "!")
   }
 }
 
 class Point {
-  def init(coordinateX, coordinateY) {
+  func init(coordinateX, coordinateY) {
     this.x = coordinateX
     this.y = coordinateY
   }
@@ -69,17 +67,17 @@ println(testPoint.y)
 // Stolen from Robert Nystrom
 
 class A {
-  def method() {
+  func method() {
     println("A method")
   }
 }
 
 class B extends A {
-  def method() {
+  func method() {
     println("B method")
   }
 
-  def test() {
+  func test() {
     super.method()
   }
 }

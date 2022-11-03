@@ -1,5 +1,5 @@
 class Zoo {
-  def init() {
+  func init() {
     this.aardvark = 1
     this.baboon   = 1
     this.cat      = 1
@@ -8,27 +8,27 @@ class Zoo {
     this.fox      = 1
   }
 
-  def ant() {
+  func ant() {
     return this.aardvark
   }
 
-  def banana() {
+  func banana() {
     return this.baboon
   }
 
-  def tuna() {
+  func tuna() {
     return this.cat
   }
 
-  def hay() {
+  func hay() {
     return this.donkey
   }
 
-  def grass() {
+  func grass() {
     return this.elephant
   }
 
-  def mouse() {
+  func mouse() {
     return this.fox
   }
 }

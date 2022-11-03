@@ -1,11 +1,11 @@
-def pow(num, base) {
+func pow(num, base) {
   if (base == 0) {
     return 1
   }
   return num * pow(num, base - 1)
 }
 
-def log(base, num) {
+func log(base, num) {
   if (num <= base) {
     return 1
   }

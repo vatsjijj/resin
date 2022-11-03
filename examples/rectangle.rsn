@@ -1,19 +1,19 @@
 class Rectangle {
-  def init(rectWidth, rectHeight) {
+  func init(rectWidth, rectHeight) {
     this.width = rectWidth
     this.height = rectHeight
   }
 
-  def printArea() {
+  func printArea() {
     let area = this.width * this.height
     println(area)
   }
 
-  def setHeight(newHeight) {
+  func setHeight(newHeight) {
     this.height = newHeight
   }
 
-  def setWidth(newWidth) {
+  func setWidth(newWidth) {
     this.width = newWidth
   }
 }

@@ -38,11 +38,12 @@ typedef enum {
   CLASS,
   TFALSE, TTRUE,
   NIL,
-  DEF,
+  FUNC,
   SUPER,
   RETURN,
   THIS,
   LET,
+  THROW,
   // Other
   ERR, TEOF
 } TokenType;

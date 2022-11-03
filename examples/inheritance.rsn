@@ -1,17 +1,17 @@
 // Stolen from Robert Nystrom
 
 class A {
-  def method() {
+  func method() {
     println("A method")
   }
 }
 
 class B extends A {
-  def method() {
+  func method() {
     println("B method")
   }
 
-  def test() {
+  func test() {
     super.method()
   }
 }

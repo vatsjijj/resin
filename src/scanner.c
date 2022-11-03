@@ -20,7 +20,7 @@ void initScanner(const char* source) {
 static bool isAlpha(char c) {
   return (c >= 'a' && c <= 'z')
       || (c >= 'A' && c <= 'Z');
-  //    || c == '_';
+  //  || c == '_';
 }
 
 static bool isDigit(char c) {
@@ -123,7 +123,6 @@ static TokenType checkKeyword(
 static TokenType identifierType() {
   switch (scanner.start[0]) {
     case 'c': return checkKeyword(1, 4, "lass", CLASS);
-    case 'd': return checkKeyword(1, 2, "ef", DEF);
     case 'e':
       if (scanner.current - scanner.start > 1) {
         switch (scanner.start[1]) {
@@ -147,6 +146,7 @@ static TokenType identifierType() {
       if (scanner.current - scanner.start > 1) {
         switch (scanner.start[1]) {
           case 'a': return checkKeyword(2, 3, "lse", TFALSE);
+          case 'u': return checkKeyword(2, 2, "nc", FUNC);
           case 'o': return checkKeyword(2, 1, "r", FOR);
         }
       }

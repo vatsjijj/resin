@@ -7,7 +7,7 @@
 #include "include/vm.h"
 #include "include/debug.h"
 
-#define RESIN_VERSION "09-28-2022"
+#define RESIN_VERSION "11-03-2022"
 
 static void repl() {
   printf("Resin, Version %s.\n\n", RESIN_VERSION);
@@ -27,7 +27,7 @@ int main(int argc, const char* argv[]) {
   if (argc == 1) {
     repl();
   }
-  else if (argc == 2 && strcmp(argv[1], "ver") == 0) {
+  else if (argc == 2 && (strcmp(argv[1], "ver") == 0 || strcmp(argv[1], "version") == 0)) {
     printf("Resin Compiler, Version %s.\n", RESIN_VERSION);
     exit(0);
   }

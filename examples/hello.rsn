@@ -1,1 +1,7 @@
 println("Hello, world!")
+
+func greet(name) {
+  println("Hello, " + name + "!")
+}
+
+greet("Bob")
