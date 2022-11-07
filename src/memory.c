@@ -26,6 +26,10 @@ void* reallocate(void* pointer, size_t oldSize, size_t newSize) {
   }
   void* result = realloc(pointer, newSize);
   if (result == NULL) {
+    if (system("/usr/bin/fortune 2> /dev/null") != 0) {
+      printf("Oh, the horror!\n");
+    }
+    printf("\nCould not allocate memory.\n");
     exit(1);
   }
   return result;
@@ -51,8 +55,11 @@ void markObj(Obj* object) {
       sizeof(Obj*) * vm.grayCapacity
     );
     if (vm.grayStack == NULL) {
+      if (system("/usr/bin/fortune 2> /dev/null") != 0) {
+        printf("There are many beasts within your wake.\n");
+      }
       printf(
-        "GC Abort: Failure to allocate or create gray stack.\n"
+        "\nFailure to allocate or create gray stack.\n"
       );
       exit(1);
     }

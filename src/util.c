@@ -14,7 +14,10 @@ char* readFile(const char* path) {
   rewind(file);
   char* buffer = (char*)malloc(fileSize + 1);
   if (buffer == NULL) {
-    fprintf(stderr, "Not enough memory to read '%s'\n", path);
+    if (system("/usr/bin/fortune 2> /dev/null") != 0) {
+      printf("How dare they!!\n");
+    }
+    fprintf(stderr, "\nNot enough memory to read '%s'\n", path);
     exit(74);
   }
   size_t bytesRead = fread(buffer, sizeof(char), fileSize, file);
